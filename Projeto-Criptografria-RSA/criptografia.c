@@ -39,7 +39,7 @@ static void Scanf_number_primo(int * n)
     int q;
     scanf("%d", &q);
     if (primo(q))
-        printf("O %d e primo!\n\n", q);
+        printf("<O %d e primo!\n\n", q);
         else {
             while (!primo(q)){
                 printf("<[%d] nao e primo, Informe outro numero: ", q);
@@ -49,10 +49,11 @@ static void Scanf_number_primo(int * n)
     *n = q;
 }
 
-static void List_coprimos_existentes(int n)
+static void list_coprimos_existentes(int p, int q)
 {
-    int i, cont = 0;
-    printf("Coprimos disponiveis para escolha do expoente:\n");
+    int i, cont = 0, n = p * q;
+    printf("<Existem %d numeros coprimos disponiveis para escolha do expoente:\n", (p - 1) * (q - 1));
+    printf("<Lista com os %d coprimos:\n",MAX_EXP);
     for (i = 1; i < MAX_EXP; i++)
         if (coprimos(n, i))
             printf("%d- %d\n", ++cont, i);
@@ -96,11 +97,11 @@ static int gerar_d(int y, int fi) {
 static void criptografar(char * str, int y, int mod)
 {
     int i, j, a, b;
-    char nome_arq[8];
+    char nome_arq[31];
     FILE *fptr, *fptr_1;
     fptr = modo_fptr("Mat_modu_cripto.txt", "w");
     printf("\n<Infome o nome do arquivo que armazenara os dados criptografados: ");
-    scanf( "%s[^\n]", nome_arq);
+    scanf(" %s[^\n]", nome_arq);
     fptr_1 = modo_fptr(nome_arq, "w");
 
     for (i = 0; str[i] != '\0'; i++) {
@@ -165,15 +166,15 @@ void Criar_arquivo_criptografado(int * P, int * Q, int * Y)
     Scanf_number_primo(&p);
     printf(">Informe o q: ");
     Scanf_number_primo(&q);
-    List_coprimos_existentes(p * q);
+    list_coprimos_existentes(p, q);
 
     printf("\n>Informe o expoente: ");
     scanf("%d", &y);
-    if ((coprimos((p - 1) * (q - 1), y)))
-        printf("<[%d] e [%d] sao coprimos!\n",(p - 1) * (q - 1), y);
+    if (coprimos(p * q, y))
+        printf("<[%d] e [%d] sao coprimos!\n", p  * q , y);
      else {
-            while (!(coprimos((p - 1) * (q - 1), y))){
-               printf("\n<[%d] e [%d] nao sao coprimos, informe outro expoente: ",(p - 1) * (q - 1), y);
+            while (!(coprimos(p * q , y))) {
+                printf("\n<[%d] e [%d] nao sao coprimos, informe outro expoente: ",(p - 1) * (q - 1), y);
                 scanf("%d", &y);
             }
         }
