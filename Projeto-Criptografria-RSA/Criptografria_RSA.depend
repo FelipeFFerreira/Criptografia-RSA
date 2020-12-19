@@ -1,0 +1,49 @@
+# depslib dependency file v1.0
+1608334247 source:c:\github\criptografica\criptografria_rsa\main.c
+	"criptografia.h"
+	<stdio.h>
+
+1608329896 c:\github\criptografica\criptografria_rsa\criptografia.h
+	<stdbool.h>
+	<stdio.h>
+
+1608333259 source:c:\github\criptografica\criptografria_rsa\criptografia.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<math.h>
+	<stdbool.h>
+	"criptografia.h"
+
+1608336068 source:c:\github\criptografica\projeto-criptografria-rsa\criptografia.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<math.h>
+	<stdbool.h>
+	"criptografia.h"
+
+1608336299 c:\github\criptografica\projeto-criptografria-rsa\criptografia.h
+	<stdbool.h>
+	<stdio.h>
+
+1608334247 source:c:\github\criptografica\projeto-criptografria-rsa\main.c
+	"criptografia.h"
+	<stdio.h>
+
+1608336068 source:c:\github\criptografia_rsa\projeto-criptografria-rsa\criptografia.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<math.h>
+	<stdbool.h>
+	"criptografia.h"
+
+1608336299 c:\github\criptografia_rsa\projeto-criptografria-rsa\criptografia.h
+	<stdbool.h>
+	<stdio.h>
+
+1608334247 source:c:\github\criptografia_rsa\projeto-criptografria-rsa\main.c
+	"criptografia.h"
+	<stdio.h>
+
