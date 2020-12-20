@@ -51,11 +51,11 @@ static void Scanf_number_primo(int * n)
 
 static void list_coprimos_existentes(int p, int q)
 {
-    int i, cont = 0, n = p * q;
-    printf("<Existem %d numeros coprimos disponiveis para escolha do expoente:\n", (p - 1) * (q - 1));
+    int i, cont = 0, totiente = (p - 1) * (q - 1);
+    printf("<Existem %d numeros coprimos de %d disponiveis para escolha do expoente:\n", totiente, p * q);
     printf("<Lista com os %d coprimos:\n",MAX_EXP);
-    for (i = 1; i < MAX_EXP; i++)
-        if (coprimos(n, i))
+    for (i = 1; i < MAX_EXP && i < totiente; i++)
+        if (coprimos(totiente, i))
             printf("%d- %d\n", ++cont, i);
 }
 
