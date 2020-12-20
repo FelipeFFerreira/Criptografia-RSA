@@ -31,7 +31,7 @@
 	"criptografia.h"
 	<stdio.h>
 
-1608502097 source:c:\github\criptografia_rsa\projeto-criptografria-rsa\criptografia.c
+1608508348 source:c:\github\criptografia_rsa\projeto-criptografria-rsa\criptografia.c
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -39,11 +39,11 @@
 	<stdbool.h>
 	"criptografia.h"
 
-1608499197 c:\github\criptografia_rsa\projeto-criptografria-rsa\criptografia.h
+1608508194 c:\github\criptografia_rsa\projeto-criptografria-rsa\criptografia.h
 	<stdbool.h>
 	<stdio.h>
 
-1608334247 source:c:\github\criptografia_rsa\projeto-criptografria-rsa\main.c
-	"criptografia.h"
+1608507928 source:c:\github\criptografia_rsa\projeto-criptografria-rsa\main.c
 	<stdio.h>
+	"criptografia.h"
 

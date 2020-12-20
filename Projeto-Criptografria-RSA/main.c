@@ -1,11 +1,9 @@
-#include "criptografia.h"
 #include <stdio.h>
-
-//19 17 41
-
+#include "criptografia.h"
 
 int main()
 {
+    printf("\t\t[Criptografia de arquivos!]\n");
     int p, q, y, op;
     do {
         printf("\nDigite [0] para criptografar um arquivo");
