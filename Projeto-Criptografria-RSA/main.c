@@ -1,10 +1,14 @@
+#include <inttypes.h>
 #include <stdio.h>
 #include "criptografia.h"
+
 
 int main()
 {
     printf("\t\t[Criptografia de arquivos!]\n");
-    int p, q, y, op;
+    unsigned long long int p, q, y;
+    int op;
+
     do {
         printf("\nDigite [0] para criptografar um arquivo");
         printf("\nDigite [1] para descriptografar um arquivo");
@@ -14,12 +18,12 @@ int main()
         switch (op) {
             case 0 :
                 Criar_arquivo_criptografado(&p, &q, &y);
-                printf("\n<A Chave publica gerada eh e = [%d], n = %d\n", y, p * q);
-                printf("\n<Arquivos de criptografia gerado com sucesso!");
+                printf("\n<A Chave publica gerada eh e = [%llu], n = %llu\n", y, p * q);
+                printf("\n<Arquivos de criptografia gerado com sucesso!\n");
                 break;
             case 1 :
                 Descriptografar_arquivo(y, p, q);
-                printf("\n<Arquivo de descriptografado gerado com sucesso!");
+                printf("\n\n<Arquivo descriptografado gerado com sucesso!\n");
                 break;
             case 2 :
                 break;

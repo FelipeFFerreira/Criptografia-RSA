@@ -1,12 +1,14 @@
  /*
  *
- * Implementacao das operações para o projeto de criptografia-rsa.
+ * Implementacao das operaÃ§Ãµes para o projeto de criptografia-rsa.
  *
  * Felipe Ferreira
  */
+#include <inttypes.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+
 #include <math.h>
 #include <stdbool.h>
 #include "criptografia.h"
@@ -23,7 +25,7 @@ static FILE * modo_fptr(char arq1[], char modo[]) {
     return fptr;
 }
 
-static bool primo(int m)
+static bool primo(unsigned long long int m)
 {
     if (m == 1)
         return false;
@@ -32,16 +34,16 @@ static bool primo(int m)
     if (m % 2 == 0)
         return false;
     int i;
-    for (i = 3; i <= (int) sqrt(m); i += 2) {
+    for (i = 3; i <= (unsigned long long int) sqrt(m); i += 2) {
         if (m % i == 0)
             return false;
     }
     return true;
 }
 
-static bool coprimos(int a, int b)
+static bool coprimos(unsigned long long int a, unsigned long long int b)
 {
-    int c, d;
+    unsigned long long int c, d;
     do {
         c = a / b;
         d = a - c * b;
@@ -52,16 +54,16 @@ static bool coprimos(int a, int b)
         else return false;
 }
 
-static void scanf_number_primo(int * n)
+static void scanf_number_primo(unsigned long long int * n)
 {
-    int q;
-    scanf("%d", &q);
+    unsigned long long int q;
+    scanf("%llu", &q);
     if (primo(q))
-        printf("<O %d e primo!\n\n", q);
+        printf("<O %llu e primo!\n\n", q);
         else {
             while (!primo(q)){
-                printf("<[%d] nao e primo, Informe outro numero: ", q);
-                scanf("%d", &q);
+                printf("<[%llu] nao e primo, Informe outro numero: ", q);
+                scanf("%llu", &q);
             }
         }
     *n = q;
@@ -81,11 +83,12 @@ static void list_numbers_primos()
     printf("\n\n");
 }
 
-static void list_coprimos_existentes(int p, int q)
+static void list_coprimos_existentes(unsigned long long int p, unsigned long long int q)
 {
-    int i, j, totiente = (p - 1) * (q - 1);
-    printf("<Existem %d numeros coprimos de %d disponiveis para escolha do expoente:\n", totiente, p * q);
-    printf("<Lista com os %d coprimos:\n",MAX_EXP);
+    int i, j;
+    unsigned long long int totiente = (p - 1) * (q - 1);
+    printf("<Existem %llu numeros coprimos de %llu disponiveis para escolha do expoente:\n", totiente, p * q);
+    printf("<Lista com os %d coprimos:\n", MAX_EXP);
     for (i = 1, j = 0; j < MAX_EXP && j < totiente; i++)
         if (coprimos(totiente, i))
             printf("%d. %d\n", ++j, i);
@@ -115,8 +118,9 @@ static void maiscula(char str[]) {
     }
 }
 
-static int gerar_d(int y, int fi) {
-    int i, d;
+static unsigned long int gerar_d(unsigned long long int y, unsigned long long int fi) {
+    unsigned long int i;
+    unsigned long long int d;
     for (i = 1; ; i++) {
        d = (i * y) % fi;
        if (d == 1) break;
@@ -125,12 +129,13 @@ static int gerar_d(int y, int fi) {
     return i;
 }
 
-static void criptografar(char * str, int y, int mod)
+static void criptografar(char * str, unsigned long long  int y, unsigned long long int mod)
 {
-    int i, j, a, b;
+    unsigned long int i, j;
+    unsigned long long int a, b;
     char nome_arq[31];
     FILE *fptr, *fptr_1;
-    fptr = modo_fptr("Mat_modu_cripto.txt", "w");
+    fptr = modo_fptr("Mat_criptografia.txt", "w");
     printf("\n<Infome o nome do arquivo que armazenara os dados criptografados: ");
     scanf(" %s[^\n]", nome_arq);
     fptr_1 = modo_fptr(nome_arq, "w");
@@ -142,27 +147,30 @@ static void criptografar(char * str, int y, int mod)
             a = a * b;
             a = a > mod ? a %= mod : a;
         }
-        fprintf(fptr,"\n%d ^ %d mod %d = %d\t[%c] -->\t[%d]\n", str[i], y, mod, a, str[i], a);
-        fprintf(fptr_1, "%d%c", a, '.');
+        fprintf(fptr,"\n%llu ^ %llu mod %llu = %llu\t[%c] -->\t[%llu]\n", str[i], y, mod, a, str[i], a);
+        fprintf(fptr_1, "%llu%c", a, '.');
     }
-    printf("<\nDados Criptografados com sucesso!\n");
+    printf("\n<Dados Criptografados com sucesso!\n");
     fclose(fptr);
     fclose(fptr_1);
 }
 
-static void descriptografar(int y, int mod) {
-    int i, j, a, b, k = 0;
+static void descriptografar(unsigned long long int y, unsigned long long int mod) {
+    int i, j, k = 0;
+    unsigned long long int a, b;
     int texto[MAX_TEXT];
     int cont = 0, cont_lim = 0, ch;
     char str_aux[10], nome_arq[8];
-    FILE *fptr, *fptr_1;
+    FILE *fptr, *fptr_1, *fptr_2;
     printf("\n<Infome o nome do arquivo onde encontra-se os dados criptografados: ");
     scanf( "%s[^\n]", nome_arq);
     fptr = modo_fptr(nome_arq, "r");
     fptr_1 = modo_fptr("Dados_descriptografados.txt", "w");
-    printf("\n<Texto a ser descriptografado encontrado e carregado\n\n");
+    fptr_2 = modo_fptr("Mat_descriptografia.txt", "w");
+    printf("\n<Texto a ser descriptografado encontrado e carregado\n");
+    printf("Processando ...\n\n");
     while ((ch = getc(fptr)) != EOF) {
-          if (cont_lim++ < LIM_IMPRESSAO) printf("%d", ch);
+          if (cont_lim++ < LIM_IMPRESSAO) printf("%llu", ch);
           if (ch != '.')
                 str_aux[k++] = ch;
             else {
@@ -173,7 +181,6 @@ static void descriptografar(int y, int mod) {
     }
     fclose(fptr);
     texto[cont++] = '\0';
-    printf("\n\n");
     for (i = 0; texto[i] != '\0'; i++) {
         a = texto[i] % mod ;
         b = a;
@@ -181,19 +188,21 @@ static void descriptografar(int y, int mod) {
             a = a * b;
             a = a > mod ? a %= mod : a;
         }
-
+        fprintf(fptr_2,"\n%llu ^ %llu mod %llu = %c\t[%c]\n", texto[i], y, mod, a);
         fprintf(fptr_1, "%c", tolower(a));
     }
     fclose(fptr_1);
+    fclose(fptr_2);
+    printf("\n<Dados descriptografados com sucesso!\n");
 }
 
 /*
 *
 * Area de funcoes publicas
 */
-void Criar_arquivo_criptografado(int * P, int * Q, int * Y)
+void Criar_arquivo_criptografado(unsigned long long int * P, unsigned long long int * Q, unsigned long long int * Y)
 {
-    int p, q, y;
+    unsigned long long int p, q, y;
     char str[MAX_TEXT];
     inicializar_leitura_arquivo(str);
     list_numbers_primos();
@@ -204,13 +213,13 @@ void Criar_arquivo_criptografado(int * P, int * Q, int * Y)
     list_coprimos_existentes(p, q);
 
     printf("\n>Informe o expoente: ");
-    scanf("%d", &y);
+    scanf("%llu", &y);
     if (coprimos(p * q, y))
-        printf("<[%d] e [%d] sao coprimos!\n", p  * q , y);
+        printf("<[%llu] e [%llu] sao coprimos!\n", p  * q , y);
      else {
             while (!(coprimos(p * q , y))) {
-                printf("\n<[%d] e [%d] nao sao coprimos, informe outro expoente: ",(p - 1) * (q - 1), y);
-                scanf("%d", &y);
+                printf("\n<[%llu] e [%llu] nao sao coprimos, informe outro expoente: ", (p - 1) * (q - 1), y);
+                scanf("%llu", &y);
             }
         }
     *P = p;
@@ -220,7 +229,7 @@ void Criar_arquivo_criptografado(int * P, int * Q, int * Y)
     criptografar(str, y, p * q);
 }
 
-void Descriptografar_arquivo(int y, int p, int q)
+void Descriptografar_arquivo(unsigned long long int y, unsigned long long int p, unsigned long long int q)
 {
     descriptografar(gerar_d(y, (p - 1) * (q - 1)) , p * q);
 }

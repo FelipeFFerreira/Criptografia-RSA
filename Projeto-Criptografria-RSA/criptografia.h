@@ -12,14 +12,14 @@
 
 #define MAX_TEXT 100000
 #define MAX_EXP 20
-#define LIM_IMPRESSAO 300
-#define LIM_PRIMOS 100
+#define LIM_IMPRESSAO 100
+#define LIM_PRIMOS 200
 
 /*
 *
 * Funcao publica responsavel por criar o arquivo criptografado
 */
-void Criar_arquivo_criptografado(int *, int *, int *);
+void Criar_arquivo_criptografado(unsigned long long int *, unsigned long long int *, unsigned long long int *);
 
 /*
 *
