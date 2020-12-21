@@ -188,7 +188,7 @@ static void descriptografar(unsigned long long int y, unsigned long long int mod
             a = a * b;
             a = a > mod ? a %= mod : a;
         }
-        fprintf(fptr_2,"\n%llu ^ %llu mod %llu = %c\t[%c]\n", texto[i], y, mod, a);
+        fprintf(fptr_2,"\n%llu ^ %llu mod %llu \t= \t[%c]\n", texto[i], y, mod, a);
         fprintf(fptr_1, "%c", tolower(a));
     }
     fclose(fptr_1);
